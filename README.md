@@ -25,7 +25,7 @@ cd ofts-cli
 Create a virtual environment
 ```bash
 python3 -m venv OFTS_CLI_VENV
-source OFTS_CLI_VENV
+source OFTS_CLI_VENV/bin/activate
 ```
 
 Install the packages
