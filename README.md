@@ -1,7 +1,7 @@
 
 # OFTS-Cli
 
-A simple Google photos alternative that runs inside your terminal
+A simple Google photos alternative that runs inside your terminal. This project uses DeepFace to recognize faces and Microsoft's GIT to caption the images.
 
 
 
