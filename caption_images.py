@@ -21,6 +21,7 @@ def tag_image_GIT(image_path: str):
     image = Image.open(image_path).convert('RGB')
 
     # Load the processor and model
+    print("Downloading GIT-BASE-TEXTCAPS...")
     processor = AutoProcessor.from_pretrained("microsoft/git-base-textcaps")
     model = AutoModelForCausalLM.from_pretrained("microsoft/git-base-textcaps")
 
