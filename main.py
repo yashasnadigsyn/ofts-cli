@@ -7,7 +7,6 @@ from pathlib import Path
 
 # Importing the external libraries
 import magic
-
 from rich.progress import track
 from rich.console import Console
 
