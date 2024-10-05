@@ -7,6 +7,8 @@ A simple Google photos alternative that runs inside your terminal
 
 ### NOTE: If you need a professional Google Photos alternative, use [LibrePhotos](https://github.com/LibrePhotos/librephotos) or [immich](https://github.com/immich-app/immich). This project is just for fun.
 
+## Requirements
+- kitty
 
 ## Demo
 [DEMO HERE](https://imgur.com/a/teQ5r4q)
