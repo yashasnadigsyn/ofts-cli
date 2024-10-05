@@ -45,6 +45,7 @@ python3 ofts_cli.py
 
 - Videos.
 - Use [insightface](https://github.com/deepinsight/insightface) and DBSCAN like [immich](https://immich.app/docs/features/facial-recognition/#how-facial-recognition-works) does.
+- Use vector search instead of sqlite3 FTS
 - Use other captioning models ([florence-ft](https://huggingface.co/microsoft/Florence-2-base-ft))
 - Run on other terminals ([ueberzugpp](https://github.com/jstkdng/ueberzugpp))
 
