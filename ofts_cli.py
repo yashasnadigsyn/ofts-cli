@@ -3,6 +3,8 @@ import os, subprocess
 from pathlib import Path
 import time
 import json
+from http.server import HTTPServer, SimpleHTTPRequestHandler
+import webbrowser
 
 # import the external libraries
 from rich.console import Console
@@ -56,7 +58,8 @@ console.print("What do you want to do?", style="bold blue")
 console.print("1. Image tagging and face recognition (Do this first)", style="")
 console.print("2. Image searching", style="")
 console.print("3. Name faces", style="")
-choice = input("Enter your choice (1/2/3): ")
+console.print("4. Search Images with a frontend", style="")
+choice = input("Enter your choice (1/2/3/4): ")
 print("\n")
 # from here, the program goes to line 170
 
@@ -70,7 +73,7 @@ def initial_image_tagging():
     time.sleep(1)
 
     # Use fzf to search for the directory
-    directory_path = os.popen(f"find {home} -type d -print | fzf -q {home}").read().strip()
+    directory_path = os.popen(f"find {home}/Documents -type d -print | fzf -q {home}/Documents/College/DBMS/OFTS/ofts-cli/DEMO").read().strip()
     console.print(f"Chosen directory: [cyan]{directory_path}[/cyan]", style="")
     print("\n")
 
@@ -301,6 +304,33 @@ def fzf_preview(results: list):
         console.print(selected_image.stderr.decode('utf-8'), style="bold red")
         console.print("No image selected. Exiting...", style="bold red")
 
+def eject_to_json():
+    DB_PATH = f"{home}/.ofts/ofts.db"
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    db = conn.cursor()
+
+    rows = db.execute('''
+    SELECT * from photos
+    ''').fetchall()
+
+    conn.commit()
+    conn.close()
+
+    return json.dumps([dict(ix) for ix in rows])
+
+def search_image_with_frontend():
+    json_data = eject_to_json()
+    ofts_frontend_path = "../ofts-frontend/data.json"
+    with open(ofts_frontend_path, "w") as f:
+        f.write(json_data)
+
+    os.chdir("../ofts-frontend/")
+    console.print("Opening browser in 3..2..1..", style="bold green")
+    time.sleep(1)
+    httpd = HTTPServer(('localhost', 8000), SimpleHTTPRequestHandler)
+    webbrowser.open("http://localhost:8000/")
+    httpd.serve_forever()
 
 # User Choice
 if choice == "1":
@@ -342,5 +372,10 @@ elif choice=="3":
         console.print("You need to run Image tagging and face recognition first.", style="bold red")
     else:
         face_naming()
+elif choice == "4":
+    if not os.path.exists(f"{home}/.ofts/ofts.db"):
+        console.print("You need to run Image tagging and face recognition first.", style="bold red")
+    else:
+        search_image_with_frontend()
 else:
     console.print("Invalid choice. Please enter 1 or 2.", style="bold red")
